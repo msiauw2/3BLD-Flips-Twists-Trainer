@@ -9,6 +9,15 @@ body{
     font-size:32px;
 }
 
+.timer{
+    color:white;
+    font-size:96px;
+    position: absolute; 
+    top: 40%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
 button{
     background-color: rgb(20, 20, 20);
     border: .5px solid rgb(150, 150, 150);
@@ -31,6 +40,7 @@ button:hover{
     display: inline-block;
     margin:5px;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -48,3 +58,10 @@ button:hover{
   }
 .dropdown-content a:hover {background-color: #ddd;}
 .dropdown:hover .dropdown-content {display: block;}
+
+.twisty-player{
+    position: absolute; 
+    top: 75%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
