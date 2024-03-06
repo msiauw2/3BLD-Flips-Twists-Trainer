@@ -7,84 +7,94 @@
 </head>
 <body>
     <div class="scramble">
-        <p id="scr">Scramble</p>
+        <p id="scr">Press Next Scramble</p>
         <button>Last Scramble</button>
         <button onclick="nextScramble()">Next Scramble</button>
     </div>
 
-    <div class="dropdown">
-        <button>Edge Buffer: <span id="edgeBuffer">UF</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="changeOption('UF', 'edgeBuffer')">UF</a>
-            <a href="#" onclick="changeOption('UB', 'edgeBuffer')">UB</a>
-            <a href="#" onclick="changeOption('UR', 'edgeBuffer')">UR</a>
-            <a href="#" onclick="changeOption('UL', 'edgeBuffer')">UL</a>
-            <a href="#" onclick="changeOption('FL', 'edgeBuffer')">FL</a>
-            <a href="#" onclick="changeOption('FR', 'edgeBuffer')">FR</a>
-            <a href="#" onclick="changeOption('BR', 'edgeBuffer')">BR</a>
-            <a href="#" onclick="changeOption('BL', 'edgeBuffer')">BL</a>
-            <a href="#" onclick="changeOption('DF', 'edgeBuffer')">DF</a>
-            <a href="#" onclick="changeOption('DR', 'edgeBuffer')">DR</a>
-            <a href="#" onclick="changeOption('DB', 'edgeBuffer')">DB</a>
-            <a href="#" onclick="changeOption('DL', 'edgeBuffer')">DL</a>
+    <div class="timer">
+        <p id="timer">0.00</p>
+    </div>  
+
+    <div style="position: absolute; top: 50%; transform: translate(0, -50%)">
+        <div class="dropdown">
+            <button>Edge Buffer: <span id="edgeBuffer">UF</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeOption('UF', 'edgeBuffer')">UF</a>
+                <a href="#" onclick="changeOption('UB', 'edgeBuffer')">UB</a>
+                <a href="#" onclick="changeOption('UR', 'edgeBuffer')">UR</a>
+                <a href="#" onclick="changeOption('UL', 'edgeBuffer')">UL</a>
+                <a href="#" onclick="changeOption('FL', 'edgeBuffer')">FL</a>
+                <a href="#" onclick="changeOption('FR', 'edgeBuffer')">FR</a>
+                <a href="#" onclick="changeOption('BR', 'edgeBuffer')">BR</a>
+                <a href="#" onclick="changeOption('BL', 'edgeBuffer')">BL</a>
+                <a href="#" onclick="changeOption('DF', 'edgeBuffer')">DF</a>
+                <a href="#" onclick="changeOption('DR', 'edgeBuffer')">DR</a>
+                <a href="#" onclick="changeOption('DB', 'edgeBuffer')">DB</a>
+                <a href="#" onclick="changeOption('DL', 'edgeBuffer')">DL</a>
+            </div>
+        </div>
+    
+        <br>
+    
+        <div class="dropdown">
+            <button>Corner Buffer: <span id="cornerBuffer">UFR</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeOption('UFR', 'cornerBuffer')">UFR</a>
+                <a href="#" onclick="changeOption('UBL', 'cornerBuffer')">UBL</a>
+                <a href="#" onclick="changeOption('UBR', 'cornerBuffer')">UBR</a>
+                <a href="#" onclick="changeOption('UFL', 'cornerBuffer')">UFL</a>
+                <a href="#" onclick="changeOption('DBL', 'cornerBuffer')">DBL</a>
+                <a href="#" onclick="changeOption('DBR', 'cornerBuffer')">DBR</a>
+                <a href="#" onclick="changeOption('DFR', 'cornerBuffer')">DFR</a>
+                <a href="#" onclick="changeOption('DFL', 'cornerBuffer')">DFL</a>
+            </div>
+        </div>
+    
+        <br>
+    
+        <div class="dropdown">
+            <button>Edge Flips: <span id="edgeFlips">0</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeOption('0', 'edgeFlips')">0</a>
+                <a href="#" onclick="changeOption('1', 'edgeFlips')">1</a>
+                <a href="#" onclick="changeOption('2', 'edgeFlips')">2</a>
+                <a href="#" onclick="changeOption('3', 'edgeFlips')">3</a>
+                <a href="#" onclick="changeOption('4', 'edgeFlips')">4</a>
+                <a href="#" onclick="changeOption('5', 'edgeFlips')">5</a>
+                <a href="#" onclick="changeOption('6', 'edgeFlips')">6</a>
+                <a href="#" onclick="changeOption('7', 'edgeFlips')">7</a>
+                <a href="#" onclick="changeOption('8', 'edgeFlips')">8</a>
+                <a href="#" onclick="changeOption('9', 'edgeFlips')">9</a>
+                <a href="#" onclick="changeOption('10', 'edgeFlips')">10</a>
+                <a href="#" onclick="changeOption('11', 'edgeFlips')">11</a>
+    
+            </div>
+        </div>
+    
+        <br>
+    
+        <div class="dropdown">
+            <button>Corner Twists: <span id="cornerTwists">0</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeOption('0', 'cornerTwists')">0</a>
+                <a href="#" onclick="changeOption('1', 'cornerTwists')">1</a>
+                <a href="#" onclick="changeOption('2', 'cornerTwists')">2</a>
+                <a href="#" onclick="changeOption('3', 'cornerTwists')">3</a>
+                <a href="#" onclick="changeOption('4', 'cornerTwists')">4</a>
+                <a href="#" onclick="changeOption('5', 'cornerTwists')">5</a>
+                <a href="#" onclick="changeOption('6', 'cornerTwists')">6</a>
+                <a href="#" onclick="changeOption('7', 'cornerTwists')">7</a>
+            </div>
         </div>
     </div>
 
-    <br>
-
-    <div class="dropdown">
-        <button>Corner Buffer: <span id="cornerBuffer">UFR</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="changeOption('UFR', 'cornerBuffer')">UFR</a>
-            <a href="#" onclick="changeOption('UBL', 'cornerBuffer')">UBL</a>
-            <a href="#" onclick="changeOption('UBR', 'cornerBuffer')">UBR</a>
-            <a href="#" onclick="changeOption('UFL', 'cornerBuffer')">UFL</a>
-            <a href="#" onclick="changeOption('DBL', 'cornerBuffer')">DBL</a>
-            <a href="#" onclick="changeOption('DBR', 'cornerBuffer')">DBR</a>
-            <a href="#" onclick="changeOption('DFR', 'cornerBuffer')">DFR</a>
-            <a href="#" onclick="changeOption('DFL', 'cornerBuffer')">DFL</a>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="dropdown">
-        <button>Edge Flips: <span id="edgeFlips">0</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="changeOption('0', 'edgeFlips')">0</a>
-            <a href="#" onclick="changeOption('1', 'edgeFlips')">1</a>
-            <a href="#" onclick="changeOption('2', 'edgeFlips')">2</a>
-            <a href="#" onclick="changeOption('3', 'edgeFlips')">3</a>
-            <a href="#" onclick="changeOption('4', 'edgeFlips')">4</a>
-            <a href="#" onclick="changeOption('5', 'edgeFlips')">5</a>
-            <a href="#" onclick="changeOption('6', 'edgeFlips')">6</a>
-            <a href="#" onclick="changeOption('7', 'edgeFlips')">7</a>
-            <a href="#" onclick="changeOption('8', 'edgeFlips')">8</a>
-            <a href="#" onclick="changeOption('9', 'edgeFlips')">9</a>
-            <a href="#" onclick="changeOption('10', 'edgeFlips')">10</a>
-            <a href="#" onclick="changeOption('11', 'edgeFlips')">11</a>
-
-        </div>
-    </div>
-
-    <br>
-
-    <div class="dropdown">
-        <button>Corner Twists: <span id="cornerTwists">0</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="changeOption('0', 'cornerTwists')">0</a>
-            <a href="#" onclick="changeOption('1', 'cornerTwists')">1</a>
-            <a href="#" onclick="changeOption('2', 'cornerTwists')">2</a>
-            <a href="#" onclick="changeOption('3', 'cornerTwists')">3</a>
-            <a href="#" onclick="changeOption('4', 'cornerTwists')">4</a>
-            <a href="#" onclick="changeOption('5', 'cornerTwists')">5</a>
-            <a href="#" onclick="changeOption('6', 'cornerTwists')">6</a>
-            <a href="#" onclick="changeOption('7', 'cornerTwists')">7</a>
-        </div>
+    <div class="twisty-player">
+        <twisty-player id='twisty-player'; hint-facelets='floating'; background='none'; control-panel='none'; alg='none'></twisty-player>
     </div>
 
 <script src="../static/js/script.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-
+<script src="https://cdn.cubing.net/js/cubing/twisty" type="module"></script>
 </body>
 </html>
