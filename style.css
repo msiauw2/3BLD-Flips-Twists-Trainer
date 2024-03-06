@@ -1,0 +1,50 @@
+body{
+    background-color:rgb(20, 20, 20);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.scramble{
+    text-align:center;
+    color:white;
+    font-size:32px;
+}
+
+button{
+    background-color: rgb(20, 20, 20);
+    border: .5px solid rgb(150, 150, 150);
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    font-size:18px;
+    width:180px;
+    transition-duration:0.2s;
+    margin:5px;
+
+}
+button:hover{
+    border: .5px solid rgb(228, 228, 228);
+    background-color: rgb(36, 36, 36);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin:5px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left:100%;
+    top:5px;
+    background-color: #ffffff;
+    min-width: 50px;
+    
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
