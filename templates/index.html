@@ -2,14 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>3BLD Flips/Twists Trainer</title>
+    <title>3BLD Flips & Twists Trainer</title>
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
 </head>
 <body>
+    <div class="top-bar">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target=”_blank”>
+            <button class="top-button">?</button>
+        </a>
+        <a href="https://github.com/d1ad74/3BLD-Flips-Twists-Trainer" target=”_blank”>
+            <button class="top-button">Github</button>
+        </a>
+        <img src='../static/favicon.png' class="logo">
+        <span class='title'>3BLD Flips & Twists Trainer</span>
+        
+    </div>
+
     <div class="scramble">
         <p id="scr">Press Next Scramble</p>
-        <button>Last Scramble</button>
-        <button onclick="nextScramble()">Next Scramble</button>
+        <!-- this.blur() function removes keyboard focus after clicking so that space bar doesn't accidentally activate button -->
+        <button class="options" onclick="lastScramble(); this.blur()">Last Scramble</button> 
+        <button class="options" onclick="nextScramble(); this.blur()">Next Scramble</button>
     </div>
 
     <div class="timer">
@@ -18,7 +32,7 @@
 
     <div style="position: absolute; top: 50%; transform: translate(0, -50%)">
         <div class="dropdown">
-            <button>Edge Buffer: <span id="edgeBuffer">UF</button>
+            <button class="options">Edge Buffer: <span id="edgeBuffer">UF</button>
             <div class="dropdown-content">
                 <a href="#" onclick="changeOption('UF', 'edgeBuffer')">UF</a>
                 <a href="#" onclick="changeOption('UB', 'edgeBuffer')">UB</a>
@@ -38,7 +52,7 @@
         <br>
     
         <div class="dropdown">
-            <button>Corner Buffer: <span id="cornerBuffer">UFR</button>
+            <button class="options">Corner Buffer: <span id="cornerBuffer">UFR</button>
             <div class="dropdown-content">
                 <a href="#" onclick="changeOption('UFR', 'cornerBuffer')">UFR</a>
                 <a href="#" onclick="changeOption('UBL', 'cornerBuffer')">UBL</a>
@@ -54,8 +68,9 @@
         <br>
     
         <div class="dropdown">
-            <button>Edge Flips: <span id="edgeFlips">0</button>
+            <button class="options">Edge Flips: <span id="edgeFlips">Random</button>
             <div class="dropdown-content">
+                <a href="#" onclick="changeOption('Random', 'edgeFlips')">Random</a>
                 <a href="#" onclick="changeOption('0', 'edgeFlips')">0</a>
                 <a href="#" onclick="changeOption('1', 'edgeFlips')">1</a>
                 <a href="#" onclick="changeOption('2', 'edgeFlips')">2</a>
@@ -75,8 +90,9 @@
         <br>
     
         <div class="dropdown">
-            <button>Corner Twists: <span id="cornerTwists">0</button>
+            <button class="options">Corner Twists: <span id="cornerTwists">Random</button>
             <div class="dropdown-content">
+                <a href="#" onclick="changeOption('Random', 'cornerTwists')">Random</a>
                 <a href="#" onclick="changeOption('0', 'cornerTwists')">0</a>
                 <a href="#" onclick="changeOption('1', 'cornerTwists')">1</a>
                 <a href="#" onclick="changeOption('2', 'cornerTwists')">2</a>
@@ -89,8 +105,18 @@
         </div>
     </div>
 
+    <div class="times">
+        <h2>Time List</h2>
+        <ol reversed id="time_list">
+        </ol>
+    </div>
+
     <div class="twisty-player">
         <twisty-player id='twisty-player'; hint-facelets='floating'; background='none'; control-panel='none'; alg='none'></twisty-player>
+    </div>
+
+    <div>
+        <button class="gen_scrams_button" onclick="genScramsWindow(); this.blur()">Generate Scrambles!</button>
     </div>
 
 <script src="../static/js/script.js"></script>
