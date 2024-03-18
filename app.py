@@ -131,12 +131,16 @@ corner_chars = {
     ]
 }
 
-def random_state_scramble(cubestring):
+def random_state_scramble(cubestring, flips, twists):
     """
     Parameters
     ----------
     cubestring : str
         string of 54 characters denoting current cube state
+    flips : int or str
+        if int, number of edge flips desired. if str, then 'random'
+    twists : int or str
+        see above
     Returns
     -------
     str
@@ -163,14 +167,19 @@ def random_state_scramble(cubestring):
         edge = random.choice(list(edge_chars_unused.keys()))
         # pick the permutation of the edge to insert (e.g. insert blue red vs red blue into UB)
         edge_colors = random.choice(edge_chars_unused[edge])
-        # if the edge we picked is the same as the slot it's going to, 
-        # ensure it's going in solved instead of flipped (bc user already predefined flips)
-        if edge == edge_slot:
-            cubestring[edge_slot_indices[0]], cubestring[edge_slot_indices[1]] = edge_chars[edge][0][0], edge_chars[edge][0][1]
-        # otherwise put the edge in a random permutation given by the randomly selected edge_colors
+        
+        if type(flips) == int:
+            # if the edge we picked is the same as the slot it's going to, 
+            # ensure it's going in solved instead of flipped (bc user already predefined flips)
+            if edge == edge_slot:
+                cubestring[edge_slot_indices[0]], cubestring[edge_slot_indices[1]] = edge_chars[edge][0][0], edge_chars[edge][0][1]
+            # otherwise put the edge in a random permutation given by the randomly selected edge_colors
+            else:
+                cubestring[edge_slot_indices[0]], cubestring[edge_slot_indices[1]] = edge_colors[0], edge_colors[1]
         else:
+            # if user selected 'random' number of edge flips, then just generate a random permutation of edges in the scramble
             cubestring[edge_slot_indices[0]], cubestring[edge_slot_indices[1]] = edge_colors[0], edge_colors[1]
-
+            
         del edge_chars_unused[edge]
     
     # do the same process as above except for corners
@@ -191,11 +200,18 @@ def random_state_scramble(cubestring):
             corner_colors = random.choice(corner_chars[corner][0])
         else:
             corner_colors = random.choice(corner_chars[corner][1])
-        if corner == corner_slot:
-            cubestring[corner_slot_indices[0]], cubestring[corner_slot_indices[1]], cubestring[corner_slot_indices[2]] = corner_chars[corner][0][0][0], corner_chars[corner][0][0][1], corner_chars[corner][0][0][2]  
+        
+        
+        if type(twists) == int:
+            # if the edge we picked is the same as the slot it's going to, 
+            # ensure it's going in solved instead of flipped (bc user already predefined flips)
+            if corner == corner_slot:
+                cubestring[corner_slot_indices[0]], cubestring[corner_slot_indices[1]], cubestring[corner_slot_indices[2]] = corner_chars[corner][0][0][0], corner_chars[corner][0][0][1], corner_chars[corner][0][0][2]  
+            else:
+                cubestring[corner_slot_indices[0]], cubestring[corner_slot_indices[1]], cubestring[corner_slot_indices[2]] = corner_colors[0], corner_colors[1], corner_colors[2]
         else:
+            # if user selected 'random' number of corner twists, then just generate a random permutation of corners in the scramble
             cubestring[corner_slot_indices[0]], cubestring[corner_slot_indices[1]], cubestring[corner_slot_indices[2]] = corner_colors[0], corner_colors[1], corner_colors[2]
-            
         del corner_chars_unused[corner]
     
     cubestring = fix_corner_twist(cubestring,corner_buffer) 
@@ -322,8 +338,10 @@ def fix_parity(cubestring, buffer):
     """
     cubestring = list(cubestring)
     
+    # if kociemba recognizes the scramble as a valid state, then done
     try:
         kociemba.solve(''.join(cubestring))
+    # if kociemba doesn't recognize the scramble as a valid state, swap the buffer with another edge
     except:
         # keep track of which edges not flipped yet - buffer excluded bc we're always going to switch the buffer w/ smth    
         edges_not_flipped = ['UB','UR','UF','UL','FL','FR','BL','BR','DF','DR','DB','DL'] 
@@ -358,9 +376,17 @@ def gen_scramble():
     edge_buffer = data['edgeBuffer']
     global corner_buffer
     corner_buffer = data['cornerBuffer']
-    flips = int(data['edgeFlips'])
-    twists = int(data['cornerTwists'])
     
+    try:
+        flips = int(data['edgeFlips'])
+    except:
+        flips = 'random'
+        
+    try:
+        twists = int(data['cornerTwists'])
+    except:
+        twists = 'random'
+        
     # generate scramble
     
     solved = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB'
@@ -370,28 +396,113 @@ def gen_scramble():
     # flip edges
     edges_excl_buffer = list(edge_indices.keys())
     edges_excl_buffer.remove(edge_buffer)
+    
     # randomly selected edge(s) to flip - number of edges assigned by user
+    # if user selected 'Random' flips, then don't "pre-flip" any edges
     global edges_to_flip
-    edges_to_flip = random.sample(edges_excl_buffer,flips)
-    for i in range(flips):
-        scr_string = edge_flip(scr_string, edges_to_flip[i])
+    if type(flips) == int:    
+        edges_to_flip = random.sample(edges_excl_buffer,flips)
+        for i in range(flips):
+            scr_string = edge_flip(scr_string, edges_to_flip[i])
+    else:
+        edges_to_flip = []
+    
         
     # twist corners
     corners_excl_buffer = list(corner_indices.keys())
     corners_excl_buffer.remove(corner_buffer)
+    # if user selected 'Random' twists, then don't "pre-twist" any corners
     global corners_to_twist
-    corners_to_twist = random.sample(corners_excl_buffer,twists)
-    for i in range(twists):
-        scr_string = corner_twist(scr_string, corners_to_twist[i], random.choice(['cw','ccw']))
+    if type(twists) == int:
+        corners_to_twist = random.sample(corners_excl_buffer,twists)
+        for i in range(twists):
+            scr_string = corner_twist(scr_string, corners_to_twist[i], random.choice(['cw','ccw']))
+    else:
+        corners_to_twist = []
+    
+        
     # generate scramble
     # cubestring of random state scramble after flips/twists
-    scr_string = random_state_scramble(scr_string)
+    scr_string = random_state_scramble(scr_string, flips, twists)
     # solution to random state scramble
     solution = kociemba.solve(scr_string)
     # inverse to solution IS the random state scramble
     scr = invert_scramble(solution)
 
     return jsonify({'result': scr})
+
+@app.route('/gen_mult_scrambles', methods=['POST'])
+def gen_mult_scrambles():
+    data = request.get_json()
+    edgeFlipOptions = data['edgeFlipOptions']
+    cornerTwistOptions = data['cornerTwistOptions']
+    numScrams = data['numScrams']
+    scrams = [""] * numScrams
+    
+    # get user-inputted variables
+    global edge_buffer
+    edge_buffer = data['edgeBuffer']
+    global corner_buffer
+    corner_buffer = data['cornerBuffer']
+    
+    for j in range(numScrams):
+        flips = random.choice(edgeFlipOptions)
+        try:
+            flips = int(flips)
+        except:
+            flips = 'random'
+            
+        twists = random.choice(cornerTwistOptions)
+        try:
+            twists = int(twists)
+        except:
+            twists = 'random'
+            
+        # generate scramble
+        
+        solved = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB'
+        # this WILL be the cubestring of our random state scramble with flips + twists
+        scr_string = solved
+    
+        # flip edges
+        edges_excl_buffer = list(edge_indices.keys())
+        edges_excl_buffer.remove(edge_buffer)
+        
+        # randomly selected edge(s) to flip - number of edges assigned by user
+        # if user selected 'Random' flips, then don't "pre-flip" any edges
+        global edges_to_flip
+        if type(flips) == int:    
+            edges_to_flip = random.sample(edges_excl_buffer,flips)
+            for i in range(flips):
+                scr_string = edge_flip(scr_string, edges_to_flip[i])
+        else:
+            edges_to_flip = []
+        
+            
+        # twist corners
+        corners_excl_buffer = list(corner_indices.keys())
+        corners_excl_buffer.remove(corner_buffer)
+        # if user selected 'Random' twists, then don't "pre-twist" any corners
+        global corners_to_twist
+        if type(twists) == int:
+            corners_to_twist = random.sample(corners_excl_buffer,twists)
+            for i in range(twists):
+                scr_string = corner_twist(scr_string, corners_to_twist[i], random.choice(['cw','ccw']))
+        else:
+            corners_to_twist = []
+        
+            
+        # generate scramble
+        # cubestring of random state scramble after flips/twists
+        scr_string = random_state_scramble(scr_string, flips, twists)
+        # solution to random state scramble
+        solution = kociemba.solve(scr_string)
+        # inverse to solution IS the random state scramble
+        scr = invert_scramble(solution)
+        
+        scrams[j] = scr
+    
+    return jsonify({'result': scrams})
 
 if __name__ == '__main__':
     app.run(debug=True)
