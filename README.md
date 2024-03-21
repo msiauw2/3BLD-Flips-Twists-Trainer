@@ -4,7 +4,7 @@ http://fliptrainer.maxsiauw.com/
 
 I set out to develop this tool because I wanted a way to practice *harder* scrambles for 3x3 blindfolded--that is, scrambles with edge flips and corner twists. I especially need to work on breaking into edge flips and solving 3-twists using two commutators (as opposed to two two-twists). 
 
-This web app allows you to **select a desired number of edge flips and/or corner twists**, and it will generate normal 3x3 blindfolded scrambles with the number of flips/twists you set. With the "Generate Scrambles" button in the bottom right, you can also generate scrambles that you can input directly into csTimer to practice from there. 
+This web app allows you to **practice 3x3 blindfolded scrambles with a certain number of edge flips/corner twists that you set!** With the "Generate Scrambles" button in the bottom right, you can also generate scrambles that you can input into csTimer to practice directly from there. 
 
 For more in-depth instructions, see https://youtu.be/_dNoFsD36Iw
 
